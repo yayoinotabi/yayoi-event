@@ -6,109 +6,90 @@
 <title>yayoi's event</title>
 <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@300;400;600&family=Noto+Sans+JP:wght@300;400&display=swap" rel="stylesheet">
 <style>
-  :root {
-    --ivory: #F5F0E8; --cream: #EDE6D3; --charcoal: #2C2C2C;
-    --charcoal-light: #4A4A4A; --gold: #B89B6A; --gold-light: #D4BC8E;
-    --border: #D4C9B0; --white: #FEFCF8;
-  }
-  * { margin:0; padding:0; box-sizing:border-box; }
-  body { font-family:'Noto Sans JP',sans-serif; background:var(--ivory); color:var(--charcoal); line-height:1.8; font-weight:300; }
-
-  header { background:var(--charcoal); padding:28px 24px; text-align:center; }
-  header::after { content:''; display:block; width:60px; height:1px; background:var(--gold); margin:14px auto 0; }
-  .site-title { font-family:'Noto Serif JP',serif; font-size:1.55rem; font-weight:300; color:var(--ivory); letter-spacing:0.22em; }
-  .site-subtitle { font-size:0.7rem; color:var(--gold-light); letter-spacing:0.3em; margin-top:6px; text-transform:uppercase; }
-
-  nav { background:var(--cream); border-bottom:1px solid var(--border); position:sticky; top:0; z-index:100; }
-  nav ul { list-style:none; display:flex; justify-content:center; }
-  nav ul li a { display:block; padding:14px 16px; font-size:0.72rem; letter-spacing:0.15em; color:var(--charcoal-light); text-decoration:none; border-bottom:2px solid transparent; transition:color 0.2s; }
-  nav ul li a:hover, nav ul li a.active { color:var(--gold); border-bottom:2px solid var(--gold); }
-
-  section { display:none; padding:48px 20px 72px; max-width:680px; margin:0 auto; animation:fadeIn 0.4s ease; }
-  section.visible { display:block; }
-  @keyframes fadeIn { from{opacity:0;transform:translateY(10px)} to{opacity:1;transform:translateY(0)} }
-
-  .section-heading { font-family:'Noto Serif JP',serif; font-size:1.1rem; font-weight:400; letter-spacing:0.15em; margin-bottom:10px; }
-  .section-rule { width:36px; height:1px; background:var(--gold); margin-bottom:36px; }
-
-  .loading { text-align:center; padding:40px; color:var(--gold); font-size:0.8rem; letter-spacing:0.15em; }
-  .no-data { text-align:center; padding:30px; color:#bbb; font-size:0.8rem; letter-spacing:0.1em; }
-
-  .event-card { background:var(--white); border:1px solid var(--border); margin-bottom:24px; padding:26px 24px; transition:box-shadow 0.2s; }
-  .event-card:hover { box-shadow:0 4px 20px rgba(0,0,0,0.06); }
-  .event-tag { font-size:0.62rem; letter-spacing:0.25em; color:var(--gold); text-transform:uppercase; margin-bottom:8px; }
-  .event-name { font-family:'Noto Serif JP',serif; font-size:1.05rem; font-weight:400; color:var(--charcoal); margin-bottom:16px; line-height:1.6; }
-  .event-details { display:grid; gap:8px; margin-bottom:20px; }
-  .event-detail-row { display:flex; gap:12px; font-size:0.8rem; color:var(--charcoal-light); }
-  .detail-label { width:52px; flex-shrink:0; color:var(--gold); font-size:0.68rem; letter-spacing:0.1em; padding-top:2px; }
-  .btn-apply { display:inline-block; padding:10px 24px; background:var(--charcoal); color:var(--ivory); font-size:0.72rem; letter-spacing:0.2em; cursor:pointer; border:none; font-family:inherit; transition:background 0.2s; }
-  .btn-apply:hover { background:var(--gold); }
-
-  .history-item { padding:18px 0; border-bottom:1px solid var(--border); display:flex; gap:16px; align-items:flex-start; }
-  .history-date { font-family:'Noto Serif JP',serif; font-size:0.72rem; color:var(--gold); width:75px; flex-shrink:0; padding-top:2px; }
-  .history-info { flex:1; }
-  .history-name { font-size:0.88rem; color:var(--charcoal); margin-bottom:2px; }
-  .history-meta { font-size:0.73rem; color:#999; }
-  .btn-threads { display:inline-block; margin-top:6px; font-size:0.68rem; color:var(--gold); text-decoration:none; border-bottom:1px solid var(--gold-light); padding-bottom:1px; }
-
-  .policy-box { background:var(--cream); border:1px solid var(--border); padding:16px 20px; font-size:0.73rem; color:var(--charcoal-light); line-height:1.8; margin-bottom:28px; }
-
-  .modal-overlay { display:none; position:fixed; inset:0; background:rgba(0,0,0,0.55); z-index:200; align-items:center; justify-content:center; padding:20px; }
-  .modal-overlay.open { display:flex; }
-  .modal { background:var(--white); max-width:480px; width:100%; padding:36px 28px; position:relative; max-height:90vh; overflow-y:auto; }
-  .modal-title { font-family:'Noto Serif JP',serif; font-size:0.95rem; font-weight:400; margin-bottom:4px; color:var(--charcoal); letter-spacing:0.1em; }
-  .modal-sub { font-size:0.72rem; color:var(--gold); letter-spacing:0.1em; margin-bottom:24px; }
-  .modal-close { position:absolute; top:16px; right:18px; font-size:1.3rem; color:#aaa; cursor:pointer; background:none; border:none; }
-  .form-group { margin-bottom:16px; }
-  .form-label { display:block; font-size:0.72rem; letter-spacing:0.12em; color:var(--charcoal-light); margin-bottom:6px; }
-  .form-input { width:100%; padding:10px 12px; border:1px solid var(--border); background:var(--ivory); font-family:inherit; font-size:0.85rem; color:var(--charcoal); outline:none; transition:border-color 0.2s; }
-  .form-input:focus { border-color:var(--gold); }
-  .success-msg { background:var(--cream); border:1px solid var(--border); padding:20px; font-size:0.82rem; line-height:2; color:var(--charcoal-light); white-space:pre-line; }
-  .sending-msg { text-align:center; padding:20px; color:var(--gold); font-size:0.8rem; letter-spacing:0.1em; }
-
-  .star-rating { display:flex; gap:6px; margin-top:8px; }
-  .star { font-size:1.4rem; cursor:pointer; color:var(--border); transition:color 0.15s; }
-  .star.active { color:var(--gold); }
-  .radio-group { display:flex; flex-wrap:wrap; gap:10px; margin-top:8px; }
-  .radio-label { display:flex; align-items:center; gap:6px; font-size:0.8rem; cursor:pointer; color:var(--charcoal-light); }
-  textarea.form-input { resize:vertical; min-height:80px; }
-  .btn-submit { display:inline-block; padding:11px 30px; background:var(--charcoal); color:var(--ivory); font-size:0.72rem; letter-spacing:0.2em; cursor:pointer; border:none; font-family:inherit; transition:background 0.2s; margin-top:8px; }
-  .btn-submit:hover { background:var(--gold); }
-
-  .result-section { margin-bottom:32px; }
-  .result-title { font-size:0.78rem; color:var(--charcoal-light); letter-spacing:0.12em; margin-bottom:12px; border-left:2px solid var(--gold); padding-left:10px; }
-  .bar-wrap { display:flex; align-items:center; gap:10px; margin-bottom:8px; }
-  .bar-label { font-size:0.72rem; color:var(--charcoal-light); width:36px; text-align:right; flex-shrink:0; }
-  .bar-track { flex:1; height:8px; background:var(--cream); border-radius:4px; overflow:hidden; }
-  .bar-fill { height:100%; background:var(--gold); border-radius:4px; transition:width 0.8s ease; }
-  .bar-count { font-size:0.68rem; color:#aaa; width:24px; }
-  .avg-display { margin-bottom:10px; }
-  .avg-stars { font-size:1.1rem; color:var(--gold); }
-  .avg-num { font-size:0.8rem; color:var(--charcoal-light); margin-left:6px; }
-  .result-tabs { display:flex; gap:8px; margin-bottom:24px; flex-wrap:wrap; }
-  .result-tab { padding:6px 14px; font-size:0.7rem; letter-spacing:0.1em; border:1px solid var(--border); color:var(--charcoal-light); cursor:pointer; background:none; font-family:inherit; transition:all 0.2s; }
-  .result-tab.active { background:var(--charcoal); color:var(--ivory); border-color:var(--charcoal); }
-  .comment-item { padding:12px 0; border-bottom:1px solid var(--border); font-size:0.82rem; color:var(--charcoal-light); line-height:1.7; }
-  .tab-divider { font-size:0.72rem; color:#bbb; letter-spacing:0.1em; margin:32px 0 24px; text-align:center; }
-
-  .profile-container { display:flex; flex-direction:column; align-items:center; gap:28px; }
-  .profile-photo { width:160px; height:160px; border-radius:50%; object-fit:cover; object-position:center top; border:3px solid var(--border); }
-  .profile-text { font-size:0.86rem; line-height:2; color:var(--charcoal-light); text-align:center; }
-  .profile-links { display:flex; flex-wrap:wrap; gap:10px; justify-content:center; margin-top:14px; }
-  .profile-link { display:inline-block; padding:8px 18px; border:1px solid var(--border); font-size:0.7rem; letter-spacing:0.18em; color:var(--charcoal-light); text-decoration:none; transition:all 0.2s; }
-  .profile-link:hover { border-color:var(--gold); color:var(--gold); }
-
-  footer { background:var(--charcoal); padding:28px 20px; text-align:center; }
-  .footer-text { font-size:0.65rem; color:#888; letter-spacing:0.15em; }
+  :root{--ivory:#F5F0E8;--cream:#EDE6D3;--charcoal:#2C2C2C;--charcoal-light:#4A4A4A;--gold:#B89B6A;--gold-light:#D4BC8E;--border:#D4C9B0;--white:#FEFCF8;}
+  *{margin:0;padding:0;box-sizing:border-box;}
+  body{font-family:'Noto Sans JP',sans-serif;background:var(--ivory);color:var(--charcoal);line-height:1.8;font-weight:300;}
+  header{background:var(--charcoal);padding:28px 24px;text-align:center;}
+  header::after{content:'';display:block;width:60px;height:1px;background:var(--gold);margin:14px auto 0;}
+  .site-title{font-family:'Noto Serif JP',serif;font-size:1.55rem;font-weight:300;color:var(--ivory);letter-spacing:0.22em;}
+  .site-subtitle{font-size:0.7rem;color:var(--gold-light);letter-spacing:0.3em;margin-top:6px;text-transform:uppercase;}
+  nav{background:var(--cream);border-bottom:1px solid var(--border);position:sticky;top:0;z-index:100;}
+  nav ul{list-style:none;display:flex;justify-content:center;}
+  nav ul li a{display:block;padding:14px 16px;font-size:0.72rem;letter-spacing:0.15em;color:var(--charcoal-light);text-decoration:none;border-bottom:2px solid transparent;transition:color 0.2s;}
+  nav ul li a:hover,nav ul li a.active{color:var(--gold);border-bottom:2px solid var(--gold);}
+  section{display:none;padding:48px 20px 72px;max-width:680px;margin:0 auto;animation:fadeIn 0.4s ease;}
+  section.visible{display:block;}
+  @keyframes fadeIn{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
+  .section-heading{font-family:'Noto Serif JP',serif;font-size:1.1rem;font-weight:400;letter-spacing:0.15em;margin-bottom:10px;}
+  .section-rule{width:36px;height:1px;background:var(--gold);margin-bottom:36px;}
+  .loading{text-align:center;padding:40px;color:var(--gold);font-size:0.8rem;letter-spacing:0.15em;}
+  .no-data{text-align:center;padding:30px;color:#bbb;font-size:0.8rem;letter-spacing:0.1em;}
+  .event-card{background:var(--white);border:1px solid var(--border);margin-bottom:24px;padding:26px 24px;transition:box-shadow 0.2s;}
+  .event-card:hover{box-shadow:0 4px 20px rgba(0,0,0,0.06);}
+  .event-tag{font-size:0.62rem;letter-spacing:0.25em;color:var(--gold);text-transform:uppercase;margin-bottom:8px;}
+  .event-name{font-family:'Noto Serif JP',serif;font-size:1.05rem;font-weight:400;color:var(--charcoal);margin-bottom:16px;line-height:1.6;}
+  .event-details{display:grid;gap:8px;margin-bottom:20px;}
+  .event-detail-row{display:flex;gap:12px;font-size:0.8rem;color:var(--charcoal-light);}
+  .detail-label{width:52px;flex-shrink:0;color:var(--gold);font-size:0.68rem;letter-spacing:0.1em;padding-top:2px;}
+  .btn-apply{display:inline-block;padding:10px 24px;background:var(--charcoal);color:var(--ivory);font-size:0.72rem;letter-spacing:0.2em;cursor:pointer;border:none;font-family:inherit;transition:background 0.2s;}
+  .btn-apply:hover{background:var(--gold);}
+  .history-item{padding:18px 0;border-bottom:1px solid var(--border);display:flex;gap:16px;align-items:flex-start;}
+  .history-date{font-family:'Noto Serif JP',serif;font-size:0.72rem;color:var(--gold);width:75px;flex-shrink:0;padding-top:2px;}
+  .history-info{flex:1;}
+  .history-name{font-size:0.88rem;color:var(--charcoal);margin-bottom:2px;}
+  .history-meta{font-size:0.73rem;color:#999;}
+  .btn-threads{display:inline-block;margin-top:6px;font-size:0.68rem;color:var(--gold);text-decoration:none;border-bottom:1px solid var(--gold-light);padding-bottom:1px;}
+  .policy-box{background:var(--cream);border:1px solid var(--border);padding:16px 20px;font-size:0.73rem;color:var(--charcoal-light);line-height:1.8;margin-bottom:28px;}
+  .modal-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.55);z-index:200;align-items:center;justify-content:center;padding:20px;}
+  .modal-overlay.open{display:flex;}
+  .modal{background:var(--white);max-width:480px;width:100%;padding:36px 28px;position:relative;max-height:90vh;overflow-y:auto;}
+  .modal-title{font-family:'Noto Serif JP',serif;font-size:0.95rem;font-weight:400;margin-bottom:4px;color:var(--charcoal);letter-spacing:0.1em;}
+  .modal-sub{font-size:0.72rem;color:var(--gold);letter-spacing:0.1em;margin-bottom:24px;}
+  .modal-close{position:absolute;top:16px;right:18px;font-size:1.3rem;color:#aaa;cursor:pointer;background:none;border:none;}
+  .form-group{margin-bottom:16px;}
+  .form-label{display:block;font-size:0.72rem;letter-spacing:0.12em;color:var(--charcoal-light);margin-bottom:6px;}
+  .form-input{width:100%;padding:10px 12px;border:1px solid var(--border);background:var(--ivory);font-family:inherit;font-size:0.85rem;color:var(--charcoal);outline:none;transition:border-color 0.2s;}
+  .form-input:focus{border-color:var(--gold);}
+  .success-msg{background:var(--cream);border:1px solid var(--border);padding:20px;font-size:0.82rem;line-height:2;color:var(--charcoal-light);white-space:pre-line;}
+  .sending-msg{text-align:center;padding:20px;color:var(--gold);font-size:0.8rem;letter-spacing:0.1em;}
+  .star-rating{display:flex;gap:6px;margin-top:8px;}
+  .star{font-size:1.4rem;cursor:pointer;color:var(--border);transition:color 0.15s;}
+  .star.active{color:var(--gold);}
+  .radio-group{display:flex;flex-wrap:wrap;gap:10px;margin-top:8px;}
+  .radio-label{display:flex;align-items:center;gap:6px;font-size:0.8rem;cursor:pointer;color:var(--charcoal-light);}
+  textarea.form-input{resize:vertical;min-height:80px;}
+  .btn-submit{display:inline-block;padding:11px 30px;background:var(--charcoal);color:var(--ivory);font-size:0.72rem;letter-spacing:0.2em;cursor:pointer;border:none;font-family:inherit;transition:background 0.2s;margin-top:8px;}
+  .btn-submit:hover{background:var(--gold);}
+  .result-section{margin-bottom:32px;}
+  .result-title{font-size:0.78rem;color:var(--charcoal-light);letter-spacing:0.12em;margin-bottom:12px;border-left:2px solid var(--gold);padding-left:10px;}
+  .bar-wrap{display:flex;align-items:center;gap:10px;margin-bottom:8px;}
+  .bar-label{font-size:0.72rem;color:var(--charcoal-light);width:36px;text-align:right;flex-shrink:0;}
+  .bar-track{flex:1;height:8px;background:var(--cream);border-radius:4px;overflow:hidden;}
+  .bar-fill{height:100%;background:var(--gold);border-radius:4px;transition:width 0.8s ease;}
+  .bar-count{font-size:0.68rem;color:#aaa;width:24px;}
+  .avg-display{margin-bottom:10px;}
+  .avg-stars{font-size:1.1rem;color:var(--gold);}
+  .avg-num{font-size:0.8rem;color:var(--charcoal-light);margin-left:6px;}
+  .result-tabs{display:flex;gap:8px;margin-bottom:24px;flex-wrap:wrap;}
+  .result-tab{padding:6px 14px;font-size:0.7rem;letter-spacing:0.1em;border:1px solid var(--border);color:var(--charcoal-light);cursor:pointer;background:none;font-family:inherit;transition:all 0.2s;}
+  .result-tab.active{background:var(--charcoal);color:var(--ivory);border-color:var(--charcoal);}
+  .comment-item{padding:12px 0;border-bottom:1px solid var(--border);font-size:0.82rem;color:var(--charcoal-light);line-height:1.7;}
+  .tab-divider{font-size:0.72rem;color:#bbb;letter-spacing:0.1em;margin:32px 0 24px;text-align:center;}
+  .profile-container{display:flex;flex-direction:column;align-items:center;gap:28px;}
+  .profile-photo{width:160px;height:160px;border-radius:50%;object-fit:cover;object-position:center top;border:3px solid var(--border);}
+  .profile-text{font-size:0.86rem;line-height:2;color:var(--charcoal-light);text-align:center;}
+  .profile-links{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;margin-top:14px;}
+  .profile-link{display:inline-block;padding:8px 18px;border:1px solid var(--border);font-size:0.7rem;letter-spacing:0.18em;color:var(--charcoal-light);text-decoration:none;transition:all 0.2s;}
+  .profile-link:hover{border-color:var(--gold);color:var(--gold);}
+  footer{background:var(--charcoal);padding:28px 20px;text-align:center;}
+  .footer-text{font-size:0.65rem;color:#888;letter-spacing:0.15em;}
 </style>
 </head>
 <body>
-
 <header>
   <p class="site-subtitle">Private Gathering by</p>
   <h1 class="site-title">yayoi's event</h1>
 </header>
-
 <nav>
   <ul>
     <li><a href="#" onclick="showSection('events');return false;" class="active" id="nav-events">募集中</a></li>
@@ -140,7 +121,7 @@
   <div class="section-rule"></div>
   <div id="survey-results">
     <div class="result-tabs" id="result-tabs"></div>
-    <div id="result-content"><div class="loading">読み込み中 ...</div></div>
+    <div id="result-content"><div class="no-data">アンケート結果はまだありません</div></div>
   </div>
   <div class="tab-divider">— アンケートに回答する —</div>
   <div id="survey-form-area">
@@ -264,64 +245,86 @@
 </footer>
 
 <script>
+const CSV_URL = 'https://docs.google.com/spreadsheets/d/1VGpIhaFjMYYfAKRgQFASJOwqUJztbemzf1RJmqJfseI/export?format=csv&gid=715063776';
 const GAS_URL = 'https://script.google.com/macros/s/AKfycbw_Muz0dmXM5ao6wsmfjJV_gZyQnVkSHLPCxqqgPRlVwJJP5Onjqh4GocpZqeWtz094/exec';
 let allEvents = [];
-let surveyData = [];
 
-// ===== データ取得 =====
-async function loadAll() {
-  try {
-    const res = await fetch(GAS_URL + '?action=getEvents');
-    allEvents = await res.json();
-  } catch(e) { allEvents = []; }
-  renderEvents();
-  renderHistory();
-  populateSurveyDropdown();
-
-  try {
-    const res2 = await fetch(GAS_URL + '?action=getSurveys');
-    surveyData = await res2.json();
-  } catch(e) { surveyData = []; }
-  buildResultTabs();
+function parseCSV(text) {
+  const lines = text.trim().split('\n');
+  const headers = splitCSVLine(lines[0]);
+  return lines.slice(1).map(line => {
+    const cols = splitCSVLine(line);
+    const obj = {};
+    headers.forEach((h, i) => obj[h.trim()] = (cols[i] || '').trim());
+    return obj;
+  }).filter(r => Object.values(r).some(v => v));
 }
 
-// ===== 募集中 =====
+function splitCSVLine(line) {
+  const result = [];
+  let cur = '', inQ = false;
+  for (let i = 0; i < line.length; i++) {
+    const c = line[i];
+    if (c === '"' && !inQ) { inQ = true; }
+    else if (c === '"' && inQ && line[i+1] === '"') { cur += '"'; i++; }
+    else if (c === '"' && inQ) { inQ = false; }
+    else if (c === ',' && !inQ) { result.push(cur); cur = ''; }
+    else { cur += c; }
+  }
+  result.push(cur);
+  return result;
+}
+
+async function loadEvents() {
+  try {
+    const res = await fetch(CSV_URL);
+    const text = await res.text();
+    allEvents = parseCSV(text);
+    renderEvents();
+    renderHistory();
+    populateSurveyDropdown();
+  } catch(e) {
+    document.getElementById('events-list').innerHTML = '<div class="no-data">データを読み込めませんでした</div>';
+    document.getElementById('history-list').innerHTML = '';
+  }
+}
+
 function renderEvents() {
   const active = allEvents.filter(r => r['状態'] === '募集中');
   const el = document.getElementById('events-list');
   if (!active.length) { el.innerHTML = '<div class="no-data">現在募集中のイベントはありません</div>'; return; }
-  el.innerHTML = active.map((ev, i) => `
-    <div class="event-card">
+  el.innerHTML = active.map((ev, i) => {
+    const fee = ev['募集金額'] ? (isNaN(ev['募集金額']) ? ev['募集金額'] : '¥' + Number(ev['募集金額']).toLocaleString()) : '';
+    return `<div class="event-card">
       <p class="event-tag">Event ${String(i+1).padStart(2,'0')}</p>
       <h3 class="event-name">${ev['イベント名'] || ''}</h3>
       <div class="event-details">
         <div class="event-detail-row"><span class="detail-label">日時</span><span>${ev['開催日時'] || ''}</span></div>
         <div class="event-detail-row"><span class="detail-label">エリア</span><span>${ev['エリア/駅'] || ''}</span></div>
-        <div class="event-detail-row"><span class="detail-label">参加費</span><span>${ev['募集金額'] ? '¥' + Number(ev['募集金額']).toLocaleString() : ''}</span></div>
+        <div class="event-detail-row"><span class="detail-label">参加費</span><span>${fee}</span></div>
       </div>
-      <button class="btn-apply" onclick="openModal('${esc(ev['イベント名'])}','${esc(ev['開催日時'])} | ${esc(ev['エリア/駅'])}','${ev['募集金額'] ? '¥'+Number(ev['募集金額']).toLocaleString() : ''}')"}>申し込む</button>
-    </div>
-  `).join('');
+      <button class="btn-apply" onclick="openModal('${esc(ev['イベント名'])}','${esc(ev['開催日時'])} | ${esc(ev['エリア/駅'])}','${esc(fee)}')">申し込む</button>
+    </div>`;
+  }).join('');
 }
 
-// ===== 過去の開催 =====
 function renderHistory() {
   const done = allEvents.filter(r => r['状態'] === '終了').reverse();
   const el = document.getElementById('history-list');
   if (!done.length) { el.innerHTML = '<div class="no-data">過去の開催履歴はまだありません</div>'; return; }
-  el.innerHTML = done.map(ev => `
-    <div class="history-item">
+  el.innerHTML = done.map(ev => {
+    const fee = ev['募集金額'] ? (isNaN(ev['募集金額']) ? ev['募集金額'] : '¥' + Number(ev['募集金額']).toLocaleString()) : '';
+    return `<div class="history-item">
       <span class="history-date">${ev['開催日時'] || ''}</span>
       <div class="history-info">
         <div class="history-name">${ev['イベント名'] || ''}</div>
-        <div class="history-meta">${ev['エリア/駅'] || ''}&nbsp;&nbsp;${ev['募集金額'] ? '¥'+Number(ev['募集金額']).toLocaleString() : ''}</div>
+        <div class="history-meta">${ev['エリア/駅'] || ''}&nbsp;&nbsp;${fee}</div>
         ${ev['写真URL'] ? `<a href="${ev['写真URL']}" target="_blank" class="btn-threads">📷 写真を見る（Threads）</a>` : ''}
       </div>
-    </div>
-  `).join('');
+    </div>`;
+  }).join('');
 }
 
-// ===== アンケートプルダウン =====
 function populateSurveyDropdown() {
   const sel = document.getElementById('survey-event');
   allEvents.filter(r => r['状態'] === '募集中' || r['状態'] === '終了').forEach(ev => {
@@ -332,89 +335,6 @@ function populateSurveyDropdown() {
   });
 }
 
-// ===== アンケート結果 =====
-function buildResultTabs() {
-  const tabsEl = document.getElementById('result-tabs');
-  if (!surveyData.length) {
-    document.getElementById('result-content').innerHTML = '<div class="no-data">まだ回答がありません</div>';
-    return;
-  }
-  const events = [...new Set(surveyData.map(r => r['イベント名']).filter(Boolean))];
-  const tabs = ['全イベント', ...events];
-  tabsEl.innerHTML = tabs.map((t,i) => `<button class="result-tab ${i===0?'active':''}" onclick="showResult('${esc(t)}')">${t}</button>`).join('');
-  showResult('全イベント');
-}
-
-function showResult(eventName) {
-  document.querySelectorAll('.result-tab').forEach(t => t.classList.toggle('active', t.textContent === eventName));
-  const data = eventName === '全イベント' ? surveyData : surveyData.filter(r => r['イベント名'] === eventName);
-  if (!data.length) { document.getElementById('result-content').innerHTML = '<div class="no-data">このイベントの回答はまだありません</div>'; return; }
-
-  const starFields = [
-    {label:'総合満足度', key:'総合満足度'},
-    {label:'お店の雰囲気', key:'お店の雰囲気'},
-    {label:'会自体の雰囲気', key:'会の雰囲気'},
-    {label:'弥生の印象', key:'弥生の印象'},
-  ];
-  let html = '';
-
-  starFields.forEach(f => {
-    const vals = data.map(r => parseInt(r[f.key])).filter(v => v >= 1 && v <= 5);
-    if (!vals.length) return;
-    const avg = (vals.reduce((a,b)=>a+b,0)/vals.length).toFixed(1);
-    const counts = [1,2,3,4,5].map(n => vals.filter(v=>v===n).length);
-    const max = Math.max(...counts, 1);
-    html += `<div class="result-section">
-      <div class="result-title">${f.label}</div>
-      <div class="avg-display">
-        <span class="avg-stars">${'★'.repeat(Math.round(avg))}${'☆'.repeat(5-Math.round(avg))}</span>
-        <span class="avg-num">${avg} / 5.0（${vals.length}件）</span>
-      </div>
-      ${[5,4,3,2,1].map(n => `<div class="bar-wrap">
-        <span class="bar-label">${n}★</span>
-        <div class="bar-track"><div class="bar-fill" style="width:${counts[n-1]/max*100}%"></div></div>
-        <span class="bar-count">${counts[n-1]}</span>
-      </div>`).join('')}
-    </div>`;
-  });
-
-  // 性別
-  const gCounts = {};
-  data.forEach(r => { const v = r['性別']; if(v) gCounts[v]=(gCounts[v]||0)+1; });
-  if (Object.keys(gCounts).length) {
-    const total = Object.values(gCounts).reduce((a,b)=>a+b,0);
-    html += `<div class="result-section"><div class="result-title">性別</div>
-      ${Object.entries(gCounts).map(([k,v]) => `<div class="bar-wrap">
-        <span class="bar-label" style="width:52px;font-size:0.7rem;">${k}</span>
-        <div class="bar-track"><div class="bar-fill" style="width:${v/total*100}%"></div></div>
-        <span class="bar-count">${v}</span>
-      </div>`).join('')}</div>`;
-  }
-
-  // 年齢
-  const aCounts = {};
-  data.forEach(r => { const v = r['年齢層']; if(v) aCounts[v]=(aCounts[v]||0)+1; });
-  if (Object.keys(aCounts).length) {
-    const total = Object.values(aCounts).reduce((a,b)=>a+b,0);
-    html += `<div class="result-section"><div class="result-title">年齢層</div>
-      ${Object.entries(aCounts).map(([k,v]) => `<div class="bar-wrap">
-        <span class="bar-label" style="width:52px;font-size:0.7rem;">${k}</span>
-        <div class="bar-track"><div class="bar-fill" style="width:${v/total*100}%"></div></div>
-        <span class="bar-count">${v}</span>
-      </div>`).join('')}</div>`;
-  }
-
-  // コメント
-  const comments = data.map(r => r['コメント']).filter(Boolean);
-  if (comments.length) {
-    html += `<div class="result-section"><div class="result-title">コメント（${comments.length}件）</div>
-      ${comments.map(c => `<div class="comment-item">「${c}」</div>`).join('')}</div>`;
-  }
-
-  document.getElementById('result-content').innerHTML = html || '<div class="no-data">集計できるデータがありません</div>';
-}
-
-// ===== ナビ =====
 function showSection(id) {
   document.querySelectorAll('section').forEach(s => s.classList.remove('visible'));
   document.querySelectorAll('nav a').forEach(a => a.classList.remove('active'));
@@ -422,7 +342,6 @@ function showSection(id) {
   document.getElementById('nav-'+id).classList.add('active');
 }
 
-// ===== モーダル =====
 function openModal(name, info, fee) {
   document.getElementById('modal-event-name').textContent = name;
   document.getElementById('modal-event-info').textContent = info + '　' + fee;
@@ -443,18 +362,16 @@ async function submitApply() {
   const furi = document.getElementById('form-furigana').value.trim();
   const eventName = document.getElementById('modal-event-name').textContent;
   if (!name || !age || !furi) { alert('すべての項目をご入力ください'); return; }
-
   document.getElementById('modal-form-area').style.display = 'none';
   document.getElementById('modal-thanks').style.display = 'block';
   document.getElementById('modal-thanks').innerHTML = '<div class="sending-msg">送信中 ...</div>';
-
   try {
     await fetch(GAS_URL, {
       method: 'POST',
+      mode: 'no-cors',
       body: JSON.stringify({ action:'submitApply', eventName, name, age, furigana:furi })
     });
   } catch(e) {}
-
   document.getElementById('modal-thanks').innerHTML = `<div class="success-msg">申し込みありがとうございます^ ^
 振込はこちらでお願いします💰
 楽天銀行 支店217テクノ支店 普通
@@ -467,13 +384,11 @@ https://lin.ee/s6dzYlk
 お振込み名を教えてください🍀</div>`;
 }
 
-// ===== 星評価 =====
 function setStars(key, n) {
   document.getElementById('val-'+key).value = n;
   document.querySelectorAll('#star-'+key+' .star').forEach((s,i) => s.classList.toggle('active', i<n));
 }
 
-// ===== アンケート送信 =====
 async function submitSurvey(e) {
   e.preventDefault();
   const eventName = document.getElementById('survey-event').value;
@@ -484,13 +399,12 @@ async function submitSurvey(e) {
   const gender = document.querySelector('input[name="gender"]:checked')?.value || '';
   const age = document.querySelector('input[name="age"]:checked')?.value || '';
   const comment = document.getElementById('survey-comment').value;
-
   document.getElementById('survey-form-area').style.display = 'none';
   document.getElementById('survey-thanks').style.display = 'block';
-
   try {
     await fetch(GAS_URL, {
       method: 'POST',
+      mode: 'no-cors',
       body: JSON.stringify({ action:'submitSurvey', eventName, overall, shop, vibe, host, gender, age, comment })
     });
   } catch(e) {}
@@ -498,7 +412,7 @@ async function submitSurvey(e) {
 
 function esc(s) { return (s||'').replace(/'/g,"\\'"); }
 
-loadAll();
+loadEvents();
 </script>
 </body>
 </html>
