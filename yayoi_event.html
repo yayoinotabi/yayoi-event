@@ -415,6 +415,7 @@ section.visible { display:block; }
 </nav>
 
 <script>
+const CSV_QA = 'https://docs.google.com/spreadsheets/d/1VGpIhaFjMYYfAKRgQFASJOwqUJztbemzf1RJmqJfseI/export?format=csv&gid=1772505071';
 const CSV_EVENTS = 'https://docs.google.com/spreadsheets/d/1VGpIhaFjMYYfAKRgQFASJOwqUJztbemzf1RJmqJfseI/export?format=csv&gid=715063776';
 const CSV_QA = 'https://docs.google.com/spreadsheets/d/1VGpIhaFjMYYfAKRgQFASJOwqUJztbemzf1RJmqJfseI/export?format=csv&gid=1772505071';
 const CSV_SURVEY = 'https://docs.google.com/spreadsheets/d/1VGpIhaFjMYYfAKRgQFASJOwqUJztbemzf1RJmqJfseI/export?format=csv&gid=198691260';
@@ -452,7 +453,12 @@ function parseDateBlock(dateStr) {
   const m = dateStr.match(/(\d+)\/(\d+)/);
   const t = dateStr.match(/(\d+:\d+)/);
   if(!m) return {md:'',day:dateStr,dow:'',time:''};
-  const d = new Date(2025, parseInt(m[1])-1, parseInt(m[2]));
+  const month = parseInt(m[1]);
+  const now = new Date();
+  let year = now.getFullYear();
+  // 月が現在月より3ヶ月以上前なら来年と判断
+  if(month < now.getMonth() - 2) year++;
+  const d = new Date(year, month-1, parseInt(m[2]));
   return {
     md: m[1]+'/'+m[2],
     day: m[2],
@@ -578,8 +584,34 @@ function showSection(id) {
 
 function esc(s){return(s||'').replace(/'/g,"\'");}
 
+async function loadFAQ() {
+  const el = document.getElementById('faq-list');
+  if(!el) return;
+  try {
+    const res = await fetch(CSV_QA);
+    const text = await res.text();
+    const rows = parseCSV(text);
+    if(!rows.length){ el.innerHTML='<div class="no-data">Q&Aはまだ登録されていません</div>'; return; }
+    const keys = Object.keys(rows[0]);
+    const qKey = keys[0];
+    const aKey = keys[1];
+    el.innerHTML = rows.filter(r=>r[qKey]).map((r,i)=>`
+      <div class="faq-item" id="faq-${i}">
+        <div class="faq-q" onclick="toggleFAQ(${i})">${r[qKey]}</div>
+        <div class="faq-a">${(r[aKey]||'').replace(/\n/g,'<br>')}</div>
+      </div>`).join('');
+  } catch(e) {
+    el.innerHTML='<div class="no-data">Q&Aを読み込めませんでした</div>';
+  }
+}
+
+function toggleFAQ(i) {
+  document.getElementById('faq-'+i).classList.toggle('open');
+}
+
 loadEvents();
 loadSurveys();
+loadFAQ();
 loadFAQ();
 </script>
 </body>
