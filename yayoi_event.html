@@ -59,14 +59,13 @@ section.visible{display:block;}
 .trust-title{font-family:'Noto Serif JP',serif;font-size:0.72rem;color:var(--charcoal);margin-bottom:4px;}
 .trust-desc{font-size:0.62rem;color:var(--greige);line-height:1.6;}
 .policy-box{background:var(--sub);border-left:2px solid var(--gold);padding:12px 14px;font-size:0.68rem;color:var(--text-light);line-height:1.9;margin-top:8px;}
-.history-item{padding:14px 0;border-bottom:1px solid var(--border);display:flex;gap:12px;align-items:flex-start;}
-.hist-date{width:44px;flex-shrink:0;text-align:center;padding-top:2px;}
-.hist-date-m{font-size:0.56rem;color:var(--gold);letter-spacing:0.08em;}
-.hist-date-d{font-family:'Cormorant Garamond',serif;font-size:1.4rem;color:var(--charcoal);line-height:1;}
+.history-item{padding:14px 0;border-bottom:1px solid var(--border);display:flex;}
 .hist-info{flex:1;}
-.hist-name{font-family:'Noto Serif JP',serif;font-size:0.84rem;color:var(--charcoal);margin-bottom:2px;}
+.hist-date-full{font-size:0.65rem;color:var(--gold);letter-spacing:0.08em;margin-bottom:3px;}
+.hist-name{font-family:'Noto Serif JP',serif;font-size:0.84rem;color:var(--charcoal);margin-bottom:4px;}
+.hist-meta-row{display:flex;align-items:center;justify-content:space-between;gap:8px;}
 .hist-meta{font-size:0.65rem;color:var(--text-light);}
-.btn-photo{display:inline-block;margin-top:4px;font-size:0.62rem;color:var(--gold);text-decoration:none;border-bottom:1px solid rgba(194,164,109,0.4);padding-bottom:1px;}
+.btn-photo{font-size:0.62rem;color:var(--gold);text-decoration:none;border-bottom:1px solid rgba(194,164,109,0.4);padding-bottom:1px;white-space:nowrap;flex-shrink:0;}
 .btn-survey{display:inline-flex;align-items:center;gap:8px;padding:12px 24px;background:var(--charcoal);color:var(--white);font-size:0.7rem;letter-spacing:0.2em;text-decoration:none;transition:background 0.2s;margin-bottom:32px;}
 .btn-survey:hover{background:var(--bordeaux);}
 .survey-note{font-size:0.73rem;color:var(--text-light);line-height:1.9;margin-bottom:20px;}
@@ -293,22 +292,44 @@ function renderEvents() {
   }).join('');
 }
 
+function parseFullDate(str) {
+  if(!str) return null;
+  const m = str.match(/(\d+)\/(\d+)/);
+  if(!m) return null;
+  return new Date(2026, parseInt(m[1])-1, parseInt(m[2]));
+}
+
+function formatFullDate(str) {
+  if(!str) return '';
+  const m = str.match(/(\d+)\/(\d+)/);
+  if(!m) return str;
+  return '2026/' + m[1].padStart(2,'0') + '/' + m[2].padStart(2,'0');
+}
+
 function renderHistory() {
-  const done = allEvents.filter(r=>r['状態']==='終了').reverse();
+  const done = allEvents.filter(r=>r['状態']==='終了');
+  // 日付で降順ソート（新しいものが上）
+  done.sort((a,b) => {
+    const da = parseFullDate(a['開催日時']);
+    const db = parseFullDate(b['開催日時']);
+    if(!da && !db) return 0;
+    if(!da) return 1;
+    if(!db) return -1;
+    return db - da;
+  });
   const el = document.getElementById('history-list');
   if(!done.length){el.innerHTML='<div class="no-data">過去の開催履歴はまだありません</div>';return;}
   el.innerHTML = done.map(ev=>{
-    const dt = parseDateBlock(ev['開催日時']);
+    const fullDate = formatFullDate(ev['開催日時']);
     const fee = formatFee(ev['募集金額']);
     return `<div class="history-item">
-      <div class="hist-date">
-        <div class="hist-date-m">${dt.md}</div>
-        <div class="hist-date-d">${dt.day}</div>
-      </div>
       <div class="hist-info">
+        <div class="hist-date-full">${fullDate}</div>
         <div class="hist-name">${ev['イベント名']||''}</div>
-        <div class="hist-meta">${ev['エリア/駅']||''}　${fee}</div>
-        ${ev['写真URL']?`<a href="${ev['写真URL']}" target="_blank" class="btn-photo">📷 写真を見る</a>`:''}
+        <div class="hist-meta-row">
+          <span class="hist-meta">${ev['エリア/駅']||''}　${fee}</span>
+          ${ev['写真URL']?`<a href="${ev['写真URL']}" target="_blank" class="btn-photo">📷 写真を見る</a>`:''}
+        </div>
       </div>
     </div>`;
   }).join('');
