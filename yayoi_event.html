@@ -235,16 +235,29 @@ function splitCSVLine(line) {
 function parseDateBlock(str) {
   if(!str) return {md:'',day:'',dow:'',time:''};
   const m = str.match(/(\d+)\/(\d+)/);
-  const t = str.match(/(\d+:\d+)/);
   if(!m) return {md:'',day:str,dow:'',time:''};
   const d = new Date(2026, parseInt(m[1])-1, parseInt(m[2]));
   const dows = ['日','月','火','水','木','金','土'];
+  // 時間部分：「18:00〜閉店まで」「15:00〜17:30」などをそのまま抽出
+  const afterDate = str.replace(/\d+\/\d+/, '').trim();
+  const timeMatch = afterDate.match(/(\d+:\d+[^,
+]*)/);
+  const time = timeMatch ? timeMatch[1].trim() : '';
   return {
     md: m[1]+'/'+m[2],
     day: m[2],
     dow: '('+dows[d.getDay()]+')',
-    time: t ? t[1]+'〜' : ''
+    time: time
   };
+}
+
+function parseSortDate(str) {
+  if(!str) return new Date(9999,0,1);
+  const m = str.match(/(\d+)\/(\d+)/);
+  if(!m) return new Date(9999,0,1);
+  const t = str.match(/(\d+):(\d+)/);
+  return new Date(2026, parseInt(m[1])-1, parseInt(m[2]),
+    t ? parseInt(t[1]) : 0, t ? parseInt(t[2]) : 0);
 }
 
 function formatFee(val) {
@@ -263,6 +276,7 @@ async function loadEvents() {
 
 function renderEvents() {
   const active = allEvents.filter(r=>r['状態']==='募集中');
+  active.sort((a,b) => parseSortDate(a['開催日時']) - parseSortDate(b['開催日時']));
   const el = document.getElementById('events-list');
   document.getElementById('event-count').textContent = active.length ? active.length+'件募集中' : '';
   if(!active.length){el.innerHTML='<div class="no-data">現在募集中のイベントはありません<br><br>次回開催をお楽しみに。</div>';return;}
