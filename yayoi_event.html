@@ -4,16 +4,12 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>yayoi's event</title>
-<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@300;400;500&family=Noto+Sans+JP:wght@300;400&family=Cormorant+Garamond:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@300;400;500&family=Noto+Sans+JP:wght@300;400&family=Cormorant+Garamond:wght@400;500&display=swap" rel="stylesheet">
 <style>
-:root {
-  --base:#F7F3EE; --sub:#EAE3D6; --greige:#8C8377; --charcoal:#3A342F;
-  --bordeaux:#6E2C2C; --gold:#C2A46D; --white:#FFFFFF;
-  --text:#3A342F; --text-light:#8C8377; --border:#DDD6CE;
-}
+:root{--base:#F7F3EE;--sub:#EAE3D6;--greige:#8C8377;--charcoal:#3A342F;--bordeaux:#6E2C2C;--gold:#C2A46D;--white:#FFFFFF;--text:#3A342F;--text-light:#8C8377;--border:#DDD6CE;}
 *{margin:0;padding:0;box-sizing:border-box;}
 body{font-family:'Noto Sans JP',sans-serif;background:var(--base);color:var(--text);line-height:1.8;font-weight:300;}
-header{background:var(--base);border-bottom:1px solid var(--border);padding:16px 20px;display:flex;align-items:center;position:sticky;top:0;z-index:200;}
+header{background:var(--base);border-bottom:1px solid var(--border);padding:16px 20px;position:sticky;top:0;z-index:200;}
 .logo-text{font-family:'Cormorant Garamond',serif;font-size:1.15rem;color:var(--charcoal);letter-spacing:0.08em;}
 .logo-sub{font-size:0.52rem;color:var(--greige);letter-spacing:0.25em;text-transform:uppercase;display:block;margin-top:1px;}
 .hero{position:relative;overflow:hidden;height:260px;}
@@ -43,7 +39,7 @@ section.visible{display:block;}
 .date-md{font-family:'Cormorant Garamond',serif;font-size:0.65rem;color:var(--gold);letter-spacing:0.1em;}
 .date-day{font-family:'Cormorant Garamond',serif;font-size:2rem;color:var(--white);line-height:1;}
 .date-dow{font-size:0.52rem;color:rgba(255,255,255,0.45);letter-spacing:0.1em;margin-top:2px;}
-.date-time{font-size:0.58rem;color:rgba(255,255,255,0.6);margin-top:6px;text-align:center;border-top:1px solid rgba(255,255,255,0.1);padding-top:6px;}
+.date-time{font-size:0.55rem;color:rgba(255,255,255,0.6);margin-top:6px;text-align:center;border-top:1px solid rgba(255,255,255,0.1);padding-top:6px;width:100%;}
 .date-area{font-size:0.55rem;color:var(--gold);margin-top:4px;text-align:center;}
 .event-body{flex:1;padding:14px 14px 12px;display:flex;flex-direction:column;}
 .genre-tag{display:inline-block;padding:2px 8px;border:1px solid var(--border);font-size:0.58rem;letter-spacing:0.1em;color:var(--greige);margin-bottom:7px;align-self:flex-start;}
@@ -52,14 +48,14 @@ section.visible{display:block;}
 .event-fee-loc{display:flex;flex-direction:column;gap:2px;}
 .event-fee{font-size:0.8rem;color:var(--charcoal);font-weight:400;}
 .event-area{font-size:0.65rem;color:var(--text-light);}
-.btn-apply{display:inline-flex;align-items:center;gap:6px;padding:8px 14px;background:var(--gold);color:var(--white);font-size:0.62rem;letter-spacing:0.15em;text-decoration:none;font-family:inherit;transition:background 0.2s;white-space:nowrap;}
+.btn-apply{display:inline-flex;align-items:center;gap:6px;padding:8px 14px;background:var(--gold);color:var(--white);font-size:0.62rem;letter-spacing:0.15em;text-decoration:none;transition:background 0.2s;white-space:nowrap;}
 .btn-apply:hover{background:var(--bordeaux);}
 .trust-grid{background:var(--sub);margin:24px -20px -40px;padding:24px 20px;display:grid;grid-template-columns:1fr 1fr 1fr;gap:16px;}
 .trust-item{text-align:center;}
 .trust-title{font-family:'Noto Serif JP',serif;font-size:0.72rem;color:var(--charcoal);margin-bottom:4px;}
 .trust-desc{font-size:0.62rem;color:var(--greige);line-height:1.6;}
 .policy-box{background:var(--sub);border-left:2px solid var(--gold);padding:12px 14px;font-size:0.68rem;color:var(--text-light);line-height:1.9;margin-top:8px;}
-.history-item{padding:14px 0;border-bottom:1px solid var(--border);display:flex;}
+.history-item{padding:14px 0;border-bottom:1px solid var(--border);}
 .hist-info{flex:1;}
 .hist-date-full{font-size:0.65rem;color:var(--gold);letter-spacing:0.08em;margin-bottom:3px;}
 .hist-name{font-family:'Noto Serif JP',serif;font-size:0.84rem;color:var(--charcoal);margin-bottom:4px;}
@@ -125,11 +121,7 @@ section.visible{display:block;}
     </div>
     <div class="sec-rule"></div>
     <div id="events-list"><div class="loading">読み込み中 ...</div></div>
-    <div class="policy-box">
-      ▼ キャンセルポリシー<br>
-      ・3日前以降のキャンセル・当日欠席：返金不可（参加費の100%）<br>
-      ※直前・無断キャンセルの場合は、以降の参加をお断りします
-    </div>
+    <div class="policy-box">▼ キャンセルポリシー<br>・3日前以降のキャンセル・当日欠席：返金不可（参加費の100%）<br>※直前・無断キャンセルの場合は、以降の参加をお断りします</div>
     <div class="trust-grid">
       <div class="trust-item"><div class="trust-title">少人数制</div><div class="trust-desc">落ち着いた雰囲気でゆったり交流できます。</div></div>
       <div class="trust-item"><div class="trust-title">初参加歓迎</div><div class="trust-desc">お一人参加も多く安心してご参加いただけます。</div></div>
@@ -201,240 +193,379 @@ section.visible{display:block;}
   </a>
 </nav>
 <script>
-const CSV_EVENTS = 'https://docs.google.com/spreadsheets/d/1VGpIhaFjMYYfAKRgQFASJOwqUJztbemzf1RJmqJfseI/export?format=csv&gid=715063776';
-const CSV_SURVEY = 'https://docs.google.com/spreadsheets/d/1VGpIhaFjMYYfAKRgQFASJOwqUJztbemzf1RJmqJfseI/export?format=csv&gid=198691260';
-const CSV_QA = 'https://docs.google.com/spreadsheets/d/1VGpIhaFjMYYfAKRgQFASJOwqUJztbemzf1RJmqJfseI/export?format=csv&gid=1772505071';
-const APPLY_URL = 'https://docs.google.com/forms/d/e/1FAIpQLSeUBzuErLzaF2A5n7B00iQ2fSf1Lm8p80uOt1FaqKlHCWQvjg/viewform';
-let allEvents = [], surveyData = [];
+
+var CSV_EVENTS = 'https://docs.google.com/spreadsheets/d/1VGpIhaFjMYYfAKRgQFASJOwqUJztbemzf1RJmqJfseI/export?format=csv&gid=715063776';
+var CSV_SURVEY = 'https://docs.google.com/spreadsheets/d/1VGpIhaFjMYYfAKRgQFASJOwqUJztbemzf1RJmqJfseI/export?format=csv&gid=198691260';
+var CSV_QA = 'https://docs.google.com/spreadsheets/d/1VGpIhaFjMYYfAKRgQFASJOwqUJztbemzf1RJmqJfseI/export?format=csv&gid=1772505071';
+var APPLY_URL = 'https://docs.google.com/forms/d/e/1FAIpQLSeUBzuErLzaF2A5n7B00iQ2fSf1Lm8p80uOt1FaqKlHCWQvjg/viewform';
+var allEvents = [];
+var surveyData = [];
 
 function parseCSV(text) {
-  const lines = text.trim().split('\n');
-  const headers = splitCSVLine(lines[0]);
-  return lines.slice(1).map(line => {
-    const cols = splitCSVLine(line);
-    const obj = {};
-    headers.forEach((h,i) => obj[h.trim()] = (cols[i]||'').trim());
-    return obj;
-  }).filter(r => Object.values(r).some(v => v));
+  var lines = text.trim().split('\n');
+  var headers = splitCSVLine(lines[0]);
+  var result = [];
+  for (var i = 1; i < lines.length; i++) {
+    var cols = splitCSVLine(lines[i]);
+    var obj = {};
+    for (var j = 0; j < headers.length; j++) {
+      obj[headers[j].trim()] = (cols[j] || '').trim();
+    }
+    var hasValue = false;
+    for (var k in obj) { if (obj[k]) { hasValue = true; break; } }
+    if (hasValue) result.push(obj);
+  }
+  return result;
 }
 
 function splitCSVLine(line) {
-  const result=[]; let cur='', inQ=false;
-  for(let i=0;i<line.length;i++){
-    const c=line[i];
-    if(c==='"'&&!inQ){inQ=true;}
-    else if(c==='"'&&inQ&&line[i+1]==='"'){cur+='"';i++;}
-    else if(c==='"'&&inQ){inQ=false;}
-    else if(c===','&&!inQ){result.push(cur);cur='';}
-    else{cur+=c;}
+  var result = [];
+  var cur = '';
+  var inQ = false;
+  for (var i = 0; i < line.length; i++) {
+    var c = line[i];
+    if (c === '"' && !inQ) { inQ = true; }
+    else if (c === '"' && inQ && line[i+1] === '"') { cur += '"'; i++; }
+    else if (c === '"' && inQ) { inQ = false; }
+    else if (c === ',' && !inQ) { result.push(cur); cur = ''; }
+    else { cur += c; }
   }
   result.push(cur);
   return result;
 }
 
-function parseDateBlock(str) {
-  if(!str) return {md:'',day:'',dow:'',time:''};
-  const m = str.match(/(\d+)\/(\d+)/);
-  if(!m) return {md:'',day:str,dow:'',time:''};
-  const d = new Date(2026, parseInt(m[1])-1, parseInt(m[2]));
-  const dows = ['日','月','火','水','木','金','土'];
-  // 時間部分：「18:00〜閉店まで」「15:00〜17:30」などをそのまま抽出
-  const afterDate = str.replace(/\d+\/\d+/, '').trim();
-  const timeMatch = afterDate.match(/(\d+:\d+[^,
-]*)/);
-  const time = timeMatch ? timeMatch[1].trim() : '';
-  return {
-    md: m[1]+'/'+m[2],
-    day: m[2],
-    dow: '('+dows[d.getDay()]+')',
-    time: time
-  };
+function getMonthDay(str) {
+  if (!str) return null;
+  var parts = str.split('/');
+  if (parts.length < 2) return null;
+  var m = parseInt(parts[0]);
+  var rest = parts[1].split(' ')[0].split('\t')[0];
+  var d = parseInt(rest);
+  if (isNaN(m) || isNaN(d)) return null;
+  return { month: m, day: d };
 }
 
-function parseSortDate(str) {
-  if(!str) return new Date(9999,0,1);
-  const m = str.match(/(\d+)\/(\d+)/);
-  if(!m) return new Date(9999,0,1);
-  const t = str.match(/(\d+):(\d+)/);
-  return new Date(2026, parseInt(m[1])-1, parseInt(m[2]),
-    t ? parseInt(t[1]) : 0, t ? parseInt(t[2]) : 0);
+function getTimeStr(str) {
+  if (!str) return '';
+  var idx = str.indexOf(' ');
+  if (idx < 0) return '';
+  return str.slice(idx + 1).trim();
+}
+
+function getDow(month, day) {
+  var dows = ['日','月','火','水','木','金','土'];
+  var d = new Date(2026, month - 1, day);
+  return '(' + dows[d.getDay()] + ')';
 }
 
 function formatFee(val) {
-  if(!val) return '';
-  return isNaN(val) ? val : Number(val).toLocaleString()+'円';
+  if (!val) return '';
+  var n = parseInt(val);
+  if (isNaN(n)) return val;
+  return n.toLocaleString() + '円';
 }
 
-async function loadEvents() {
-  try {
-    const res = await fetch(CSV_EVENTS);
-    allEvents = parseCSV(await res.text());
-  } catch(e) { allEvents=[]; }
-  renderEvents();
-  renderHistory();
+function sortByDate(arr) {
+  return arr.slice().sort(function(a, b) {
+    var da = getMonthDay(a['開催日時']);
+    var db = getMonthDay(b['開催日時']);
+    if (!da && !db) return 0;
+    if (!da) return 1;
+    if (!db) return -1;
+    if (da.month !== db.month) return da.month - db.month;
+    return da.day - db.day;
+  });
+}
+
+function sortByDateDesc(arr) {
+  return arr.slice().sort(function(a, b) {
+    var da = getMonthDay(a['開催日時']);
+    var db = getMonthDay(b['開催日時']);
+    if (!da && !db) return 0;
+    if (!da) return 1;
+    if (!db) return -1;
+    if (da.month !== db.month) return db.month - da.month;
+    return db.day - da.day;
+  });
+}
+
+function loadEvents() {
+  fetch(CSV_EVENTS).then(function(r) { return r.text(); }).then(function(text) {
+    allEvents = parseCSV(text);
+    renderEvents();
+    renderHistory();
+  }).catch(function() {
+    allEvents = [];
+    renderEvents();
+    renderHistory();
+  });
 }
 
 function renderEvents() {
-  const active = allEvents.filter(r=>r['状態']==='募集中');
-  active.sort((a,b) => parseSortDate(a['開催日時']) - parseSortDate(b['開催日時']));
-  const el = document.getElementById('events-list');
-  document.getElementById('event-count').textContent = active.length ? active.length+'件募集中' : '';
-  if(!active.length){el.innerHTML='<div class="no-data">現在募集中のイベントはありません<br><br>次回開催をお楽しみに。</div>';return;}
-  el.innerHTML = active.map(ev=>{
-    const dt = parseDateBlock(ev['開催日時']);
-    const fee = formatFee(ev['募集金額']);
-    return `<div class="event-card">
-      <div class="date-block">
-        <span class="date-md">${dt.md}</span>
-        <span class="date-day">${dt.day}</span>
-        <span class="date-dow">${dt.dow}</span>
-        ${dt.time?`<span class="date-time">${dt.time}</span>`:''}
-        ${ev['エリア/駅']?`<span class="date-area">${ev['エリア/駅']}</span>`:''}
-      </div>
-      <div class="event-body">
-        ${ev['ジャンル']?`<span class="genre-tag">${ev['ジャンル']}</span>`:''}
-        <p class="event-name">${ev['イベント名']||''}</p>
-        <div class="event-bottom">
-          <div class="event-fee-loc">
-            <span class="event-fee">${fee}</span>
-            <span class="event-area">${ev['エリア/駅']||''}周辺</span>
-          </div>
-          <a href="${APPLY_URL}" target="_blank" class="btn-apply">申し込む →</a>
-        </div>
-      </div>
-    </div>`;
-  }).join('');
-}
-
-function parseFullDate(str) {
-  if(!str) return null;
-  const m = str.match(/(\d+)\/(\d+)/);
-  if(!m) return null;
-  return new Date(2026, parseInt(m[1])-1, parseInt(m[2]));
-}
-
-function formatFullDate(str) {
-  if(!str) return '';
-  const m = str.match(/(\d+)\/(\d+)/);
-  if(!m) return str;
-  return '2026/' + m[1].padStart(2,'0') + '/' + m[2].padStart(2,'0');
+  var active = allEvents.filter(function(r) { return r['状態'] === '募集中'; });
+  active = sortByDate(active);
+  var el = document.getElementById('events-list');
+  var countEl = document.getElementById('event-count');
+  if (countEl) countEl.textContent = active.length ? active.length + '件募集中' : '';
+  if (!active.length) {
+    el.innerHTML = '<div class="no-data">現在募集中のイベントはありません<br><br>次回開催をお楽しみに。</div>';
+    return;
+  }
+  var html = '';
+  for (var i = 0; i < active.length; i++) {
+    var ev = active[i];
+    var md = getMonthDay(ev['開催日時']);
+    var timeStr = getTimeStr(ev['開催日時']);
+    var dow = md ? getDow(md.month, md.day) : '';
+    var mdStr = md ? md.month + '/' + md.day : '';
+    var dayStr = md ? String(md.day) : '';
+    var fee = formatFee(ev['募集金額']);
+    var genre = ev['ジャンル'] || '';
+    var area = ev['エリア/駅'] || '';
+    var name = ev['イベント名'] || '';
+    html += '<div class="event-card">';
+    html += '<div class="date-block">';
+    html += '<span class="date-md">' + mdStr + '</span>';
+    html += '<span class="date-day">' + dayStr + '</span>';
+    html += '<span class="date-dow">' + dow + '</span>';
+    if (timeStr) html += '<span class="date-time">' + timeStr + '</span>';
+    if (area) html += '<span class="date-area">' + area + '</span>';
+    html += '</div>';
+    html += '<div class="event-body">';
+    if (genre) html += '<span class="genre-tag">' + genre + '</span>';
+    html += '<p class="event-name">' + name + '</p>';
+    html += '<div class="event-bottom">';
+    html += '<div class="event-fee-loc">';
+    html += '<span class="event-fee">' + fee + '</span>';
+    if (area) html += '<span class="event-area">' + area + '周辺</span>';
+    html += '</div>';
+    html += '<a href="' + APPLY_URL + '" target="_blank" class="btn-apply">申し込む →</a>';
+    html += '</div></div></div>';
+  }
+  el.innerHTML = html;
 }
 
 function renderHistory() {
-  const done = allEvents.filter(r=>r['状態']==='終了');
-  // 日付で降順ソート（新しいものが上）
-  done.sort((a,b) => {
-    const da = parseFullDate(a['開催日時']);
-    const db = parseFullDate(b['開催日時']);
-    if(!da && !db) return 0;
-    if(!da) return 1;
-    if(!db) return -1;
-    return db - da;
-  });
-  const el = document.getElementById('history-list');
-  if(!done.length){el.innerHTML='<div class="no-data">過去の開催履歴はまだありません</div>';return;}
-  el.innerHTML = done.map(ev=>{
-    const fullDate = formatFullDate(ev['開催日時']);
-    const fee = formatFee(ev['募集金額']);
-    return `<div class="history-item">
-      <div class="hist-info">
-        <div class="hist-date-full">${fullDate}</div>
-        <div class="hist-name">${ev['イベント名']||''}</div>
-        <div class="hist-meta-row">
-          <span class="hist-meta">${ev['エリア/駅']||''}　${fee}</span>
-          ${ev['写真URL']?`<a href="${ev['写真URL']}" target="_blank" class="btn-photo">📷 写真を見る</a>`:''}
-        </div>
-      </div>
-    </div>`;
-  }).join('');
+  var done = allEvents.filter(function(r) { return r['状態'] === '終了'; });
+  done = sortByDateDesc(done);
+  var el = document.getElementById('history-list');
+  if (!done.length) {
+    el.innerHTML = '<div class="no-data">過去の開催履歴はまだありません</div>';
+    return;
+  }
+  var html = '';
+  for (var i = 0; i < done.length; i++) {
+    var ev = done[i];
+    var md = getMonthDay(ev['開催日時']);
+    var mdStr = md ? '2026/' + String(md.month).padStart(2,'0') + '/' + String(md.day).padStart(2,'0') : '';
+    var fee = formatFee(ev['募集金額']);
+    var area = ev['エリア/駅'] || '';
+    var name = ev['イベント名'] || '';
+    var photoURL = ev['写真URL'] || '';
+    html += '<div class="history-item">';
+    html += '<div class="hist-info">';
+    html += '<div class="hist-date-full">' + mdStr + '</div>';
+    html += '<div class="hist-name">' + name + '</div>';
+    html += '<div class="hist-meta-row">';
+    html += '<span class="hist-meta">' + area + '　' + fee + '</span>';
+    if (photoURL) html += '<a href="' + photoURL + '" target="_blank" class="btn-photo">📷 写真を見る</a>';
+    html += '</div></div></div>';
+  }
+  el.innerHTML = html;
 }
 
-async function loadSurveys() {
-  try {
-    const res = await fetch(CSV_SURVEY);
-    surveyData = parseCSV(await res.text());
-  } catch(e) { surveyData=[]; }
-  buildResultTabs();
+function loadSurveys() {
+  fetch(CSV_SURVEY).then(function(r) { return r.text(); }).then(function(text) {
+    surveyData = parseCSV(text);
+    buildResultTabs();
+  }).catch(function() {
+    surveyData = [];
+    buildResultTabs();
+  });
 }
 
 function buildResultTabs() {
-  const tabsEl = document.getElementById('result-tabs');
-  if(!surveyData.length){document.getElementById('result-content').innerHTML='<div class="no-data">まだ回答がありません</div>';return;}
-  const key = Object.keys(surveyData[0]).find(k=>k.includes('イベント')||k.includes('参加'))||Object.keys(surveyData[0])[1];
-  const events = [...new Set(surveyData.map(r=>r[key]).filter(Boolean))];
-  tabsEl.innerHTML = ['全イベント',...events].map((t,i)=>`<button class="result-tab ${i===0?'active':''}" onclick="showResult('${esc(t)}')">${t}</button>`).join('');
+  var tabsEl = document.getElementById('result-tabs');
+  if (!surveyData.length) {
+    document.getElementById('result-content').innerHTML = '<div class="no-data">まだ回答がありません</div>';
+    return;
+  }
+  var keys = Object.keys(surveyData[0]);
+  var key = '';
+  for (var i = 0; i < keys.length; i++) {
+    if (keys[i].indexOf('イベント') >= 0 || keys[i].indexOf('参加') >= 0) { key = keys[i]; break; }
+  }
+  if (!key) key = keys[1] || keys[0];
+  var seen = {};
+  var events = [];
+  for (var j = 0; j < surveyData.length; j++) {
+    var v = surveyData[j][key];
+    if (v && !seen[v]) { seen[v] = true; events.push(v); }
+  }
+  var tabs = ['全イベント'].concat(events);
+  var html = '';
+  for (var k = 0; k < tabs.length; k++) {
+    html += '<button class="result-tab' + (k === 0 ? ' active' : '') + '" onclick="showResult(\'' + tabs[k].replace(/'/g, "\\'") + '\')">' + tabs[k] + '</button>';
+  }
+  tabsEl.innerHTML = html;
   showResult('全イベント');
 }
 
 function showResult(name) {
-  document.querySelectorAll('.result-tab').forEach(t=>t.classList.toggle('active',t.textContent===name));
-  const key = Object.keys(surveyData[0]||{}).find(k=>k.includes('イベント')||k.includes('参加'))||Object.keys(surveyData[0]||{})[1];
-  const data = name==='全イベント'?surveyData:surveyData.filter(r=>r[key]===name);
-  if(!data.length){document.getElementById('result-content').innerHTML='<div class="no-data">回答はまだありません</div>';return;}
-  const starFields=[
-    {label:'総合満足度',keys:['総合満足度','満足度']},
-    {label:'お店の雰囲気',keys:['お店の雰囲気','お店']},
-    {label:'会自体の雰囲気',keys:['会自体の雰囲気','会の雰囲気','会自体']},
-    {label:'弥生の印象',keys:['弥生の印象','弥生']},
+  var tabs = document.querySelectorAll('.result-tab');
+  for (var i = 0; i < tabs.length; i++) {
+    tabs[i].classList.toggle('active', tabs[i].textContent === name);
+  }
+  var keys = surveyData.length ? Object.keys(surveyData[0]) : [];
+  var key = '';
+  for (var j = 0; j < keys.length; j++) {
+    if (keys[j].indexOf('イベント') >= 0 || keys[j].indexOf('参加') >= 0) { key = keys[j]; break; }
+  }
+  if (!key && keys.length > 1) key = keys[1];
+  var data = name === '全イベント' ? surveyData : surveyData.filter(function(r) { return r[key] === name; });
+  if (!data.length) {
+    document.getElementById('result-content').innerHTML = '<div class="no-data">回答はまだありません</div>';
+    return;
+  }
+  var starFields = [
+    { label: '総合満足度', keys: ['総合満足度', '満足度'] },
+    { label: 'お店の雰囲気', keys: ['お店の雰囲気', 'お店'] },
+    { label: '会自体の雰囲気', keys: ['会自体の雰囲気', '会の雰囲気', '会自体'] },
+    { label: '弥生の印象', keys: ['弥生の印象', '弥生'] }
   ];
-  let html='';
-  starFields.forEach(f=>{
-    const k=Object.keys(data[0]).find(k=>f.keys.some(fk=>k.includes(fk)));
-    if(!k)return;
-    const vals=data.map(r=>parseInt(r[k])).filter(v=>v>=1&&v<=5);
-    if(!vals.length)return;
-    const avg=(vals.reduce((a,b)=>a+b,0)/vals.length).toFixed(1);
-    const counts=[1,2,3,4,5].map(n=>vals.filter(v=>v===n).length);
-    const max=Math.max(...counts,1);
-    html+=`<div class="result-section"><div class="result-title">${f.label}</div><div class="avg-display"><span class="avg-stars">${'★'.repeat(Math.round(avg))}${('☆').repeat(5-Math.round(avg))}</span><span class="avg-num">${avg} / 5.0（${vals.length}件）</span></div>${[5,4,3,2,1].map(n=>`<div class="bar-wrap"><span class="bar-label">${n}★</span><div class="bar-track"><div class="bar-fill" style="width:${counts[n-1]/max*100}%"></div></div><span class="bar-count">${counts[n-1]}</span></div>`).join('')}</div>`;
-  });
-  const gk=Object.keys(data[0]).find(k=>k.includes('性別'));
-  if(gk){const gc={};data.forEach(r=>{if(r[gk])gc[r[gk]]=(gc[r[gk]]||0)+1;});const tot=Object.values(gc).reduce((a,b)=>a+b,0);html+=`<div class="result-section"><div class="result-title">性別</div>${Object.entries(gc).map(([k,v])=>`<div class="bar-wrap"><span class="bar-label" style="width:46px;font-size:0.62rem;">${k}</span><div class="bar-track"><div class="bar-fill" style="width:${v/tot*100}%"></div></div><span class="bar-count">${v}</span></div>`).join('')}</div>`;}
-  const ak=Object.keys(data[0]).find(k=>k.includes('年齢')||k.includes('年代'));
-  if(ak){const ac={};data.forEach(r=>{if(r[ak])ac[r[ak]]=(ac[r[ak]]||0)+1;});const tot=Object.values(ac).reduce((a,b)=>a+b,0);html+=`<div class="result-section"><div class="result-title">年齢層</div>${Object.entries(ac).map(([k,v])=>`<div class="bar-wrap"><span class="bar-label" style="width:46px;font-size:0.62rem;">${k}</span><div class="bar-track"><div class="bar-fill" style="width:${v/tot*100}%"></div></div><span class="bar-count">${v}</span></div>`).join('')}</div>`;}
-  const ck=Object.keys(data[0]).find(k=>k.includes('コメント')||k.includes('自由'));
-  if(ck){const cs=data.map(r=>r[ck]).filter(Boolean);if(cs.length)html+=`<div class="result-section"><div class="result-title">コメント（${cs.length}件）</div>${cs.map(c=>`<div class="comment-item">「${c}」</div>`).join('')}</div>`;}
-  document.getElementById('result-content').innerHTML=html||'<div class="no-data">集計できるデータがありません</div>';
+  var html = '';
+  var dataKeys = Object.keys(data[0]);
+  for (var si = 0; si < starFields.length; si++) {
+    var f = starFields[si];
+    var k = '';
+    for (var di = 0; di < dataKeys.length; di++) {
+      for (var fi = 0; fi < f.keys.length; fi++) {
+        if (dataKeys[di].indexOf(f.keys[fi]) >= 0) { k = dataKeys[di]; break; }
+      }
+      if (k) break;
+    }
+    if (!k) continue;
+    var vals = [];
+    for (var vi = 0; vi < data.length; vi++) {
+      var n = parseInt(data[vi][k]);
+      if (n >= 1 && n <= 5) vals.push(n);
+    }
+    if (!vals.length) continue;
+    var sum = 0;
+    for (var s = 0; s < vals.length; s++) sum += vals[s];
+    var avg = (sum / vals.length).toFixed(1);
+    var counts = [0, 0, 0, 0, 0];
+    for (var ci = 0; ci < vals.length; ci++) counts[vals[ci] - 1]++;
+    var max = 0;
+    for (var mi = 0; mi < counts.length; mi++) if (counts[mi] > max) max = counts[mi];
+    if (max === 0) max = 1;
+    var stars = '';
+    for (var sti = 0; sti < Math.round(avg); sti++) stars += '★';
+    for (var emi = Math.round(avg); emi < 5; emi++) stars += '☆';
+    html += '<div class="result-section"><div class="result-title">' + f.label + '</div>';
+    html += '<div class="avg-display"><span class="avg-stars">' + stars + '</span><span class="avg-num">' + avg + ' / 5.0（' + vals.length + '件）</span></div>';
+    for (var bi = 4; bi >= 0; bi--) {
+      html += '<div class="bar-wrap"><span class="bar-label">' + (bi+1) + '★</span>';
+      html += '<div class="bar-track"><div class="bar-fill" style="width:' + (counts[bi]/max*100) + '%"></div></div>';
+      html += '<span class="bar-count">' + counts[bi] + '</span></div>';
+    }
+    html += '</div>';
+  }
+  var gKey = '';
+  for (var gki = 0; gki < dataKeys.length; gki++) {
+    if (dataKeys[gki].indexOf('性別') >= 0) { gKey = dataKeys[gki]; break; }
+  }
+  if (gKey) {
+    var gc = {};
+    for (var gi = 0; gi < data.length; gi++) { var gv = data[gi][gKey]; if (gv) gc[gv] = (gc[gv] || 0) + 1; }
+    var gtot = 0;
+    for (var gk2 in gc) gtot += gc[gk2];
+    html += '<div class="result-section"><div class="result-title">性別</div>';
+    for (var gk3 in gc) {
+      html += '<div class="bar-wrap"><span class="bar-label" style="width:46px;font-size:0.62rem;">' + gk3 + '</span>';
+      html += '<div class="bar-track"><div class="bar-fill" style="width:' + (gc[gk3]/gtot*100) + '%"></div></div>';
+      html += '<span class="bar-count">' + gc[gk3] + '</span></div>';
+    }
+    html += '</div>';
+  }
+  var aKey = '';
+  for (var aki = 0; aki < dataKeys.length; aki++) {
+    if (dataKeys[aki].indexOf('年齢') >= 0 || dataKeys[aki].indexOf('年代') >= 0) { aKey = dataKeys[aki]; break; }
+  }
+  if (aKey) {
+    var ac = {};
+    for (var ai = 0; ai < data.length; ai++) { var av = data[ai][aKey]; if (av) ac[av] = (ac[av] || 0) + 1; }
+    var atot = 0;
+    for (var ak2 in ac) atot += ac[ak2];
+    html += '<div class="result-section"><div class="result-title">年齢層</div>';
+    for (var ak3 in ac) {
+      html += '<div class="bar-wrap"><span class="bar-label" style="width:46px;font-size:0.62rem;">' + ak3 + '</span>';
+      html += '<div class="bar-track"><div class="bar-fill" style="width:' + (ac[ak3]/atot*100) + '%"></div></div>';
+      html += '<span class="bar-count">' + ac[ak3] + '</span></div>';
+    }
+    html += '</div>';
+  }
+  var cKey = '';
+  for (var cki = 0; cki < dataKeys.length; cki++) {
+    if (dataKeys[cki].indexOf('コメント') >= 0 || dataKeys[cki].indexOf('自由') >= 0) { cKey = dataKeys[cki]; break; }
+  }
+  if (cKey) {
+    var comments = [];
+    for (var cmi = 0; cmi < data.length; cmi++) { if (data[cmi][cKey]) comments.push(data[cmi][cKey]); }
+    if (comments.length) {
+      html += '<div class="result-section"><div class="result-title">コメント（' + comments.length + '件）</div>';
+      for (var ci2 = 0; ci2 < comments.length; ci2++) html += '<div class="comment-item">「' + comments[ci2] + '」</div>';
+      html += '</div>';
+    }
+  }
+  document.getElementById('result-content').innerHTML = html || '<div class="no-data">集計できるデータがありません</div>';
 }
 
-async function loadFAQ() {
-  const el = document.getElementById('faq-list');
-  try {
-    const res = await fetch(CSV_QA);
-    const text = await res.text();
-    const rows = parseCSV(text);
-    if(!rows.length){el.innerHTML='<div class="no-data">Q&Aはまだ登録されていません</div>';return;}
-    const qKey = Object.keys(rows[0])[0];
-    const aKey = Object.keys(rows[0])[1];
-    el.innerHTML = rows.filter(r=>r[qKey]).map((r,i)=>`
-      <div class="faq-item" id="faq-${i}">
-        <div class="faq-q" onclick="toggleFAQ(${i})">${r[qKey]}</div>
-        <div class="faq-a">${(r[aKey]||'').replace(/\n/g,'<br>')}</div>
-      </div>`).join('');
-  } catch(e) {
-    el.innerHTML='<div class="no-data">Q&Aを読み込めませんでした</div>';
-  }
+function loadFAQ() {
+  var el = document.getElementById('faq-list');
+  fetch(CSV_QA).then(function(r) { return r.text(); }).then(function(text) {
+    var rows = parseCSV(text);
+    if (!rows.length) { el.innerHTML = '<div class="no-data">Q&Aはまだ登録されていません</div>'; return; }
+    var keys = Object.keys(rows[0]);
+    var qKey = keys[0];
+    var aKey = keys[1] || '';
+    var html = '';
+    for (var i = 0; i < rows.length; i++) {
+      if (!rows[i][qKey]) continue;
+      html += '<div class="faq-item" id="faq-' + i + '">';
+      html += '<div class="faq-q" onclick="toggleFAQ(' + i + ')">' + rows[i][qKey] + '</div>';
+      html += '<div class="faq-a">' + (aKey ? rows[i][aKey] || '' : '') + '</div>';
+      html += '</div>';
+    }
+    el.innerHTML = html || '<div class="no-data">Q&Aはまだ登録されていません</div>';
+  }).catch(function() {
+    el.innerHTML = '<div class="no-data">Q&Aを読み込めませんでした</div>';
+  });
 }
 
 function toggleFAQ(i) {
-  document.getElementById('faq-'+i).classList.toggle('open');
+  document.getElementById('faq-' + i).classList.toggle('open');
 }
 
 function showSection(id) {
-  document.querySelectorAll('section').forEach(s=>s.classList.remove('visible'));
-  document.querySelectorAll('.bottom-nav a').forEach(a=>a.classList.remove('active'));
+  var sections = document.querySelectorAll('section');
+  for (var i = 0; i < sections.length; i++) sections[i].classList.remove('visible');
+  var navLinks = document.querySelectorAll('.bottom-nav a');
+  for (var j = 0; j < navLinks.length; j++) navLinks[j].classList.remove('active');
   document.getElementById(id).classList.add('visible');
-  const nav = document.getElementById('nav-'+id);
-  if(nav) nav.classList.add('active');
-  document.getElementById('hero').style.display = id==='events' ? 'block' : 'none';
-  window.scrollTo(0,0);
+  var nav = document.getElementById('nav-' + id);
+  if (nav) nav.classList.add('active');
+  var hero = document.getElementById('hero');
+  if (hero) hero.style.display = id === 'events' ? 'block' : 'none';
+  window.scrollTo(0, 0);
 }
 
-function esc(s){return(s||'').replace(/'/g,"\'");}
+window.onload = function() {
+  loadEvents();
+  loadSurveys();
+  loadFAQ();
+};
 
-loadEvents();
-loadSurveys();
-loadFAQ();
 </script>
 </body>
 </html>
