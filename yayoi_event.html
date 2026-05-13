@@ -50,6 +50,8 @@ section.visible{display:block;}
 .event-area{font-size:0.65rem;color:var(--text-light);}
 .btn-apply{display:inline-flex;align-items:center;gap:6px;padding:8px 14px;background:var(--gold);color:var(--white);font-size:0.62rem;letter-spacing:0.15em;text-decoration:none;transition:background 0.2s;white-space:nowrap;}
 .btn-apply:hover{background:var(--bordeaux);}
+.btn-manseki{display:inline-flex;align-items:center;padding:8px 12px;background:var(--sub);color:var(--greige);font-size:0.6rem;letter-spacing:0.1em;text-decoration:none;border:1px solid var(--border);white-space:nowrap;transition:all 0.2s;}
+.btn-manseki:hover{border-color:var(--gold);color:var(--gold);}
 .trust-grid{background:var(--sub);margin:24px -20px -40px;padding:24px 20px;display:grid;grid-template-columns:1fr 1fr 1fr;gap:16px;}
 .trust-item{text-align:center;}
 .trust-title{font-family:'Noto Serif JP',serif;font-size:0.72rem;color:var(--charcoal);margin-bottom:4px;}
@@ -302,7 +304,7 @@ function loadEvents() {
 }
 
 function renderEvents() {
-  var active = allEvents.filter(function(r) { return r['状態'] === '募集中'; });
+  var active = allEvents.filter(function(r) { return r['状態'] === '募集中' || r['状態'] === '満席'; });
   active = sortByDate(active);
   var el = document.getElementById('events-list');
   var countEl = document.getElementById('event-count');
@@ -339,7 +341,11 @@ function renderEvents() {
     html += '<span class="event-fee">' + fee + '</span>';
     if (area) html += '<span class="event-area">' + area + '周辺</span>';
     html += '</div>';
-    html += '<a href="' + APPLY_URL + '" target="_blank" class="btn-apply">申し込む →</a>';
+    if (ev['状態'] === '満席') {
+      html += '<a href="https://lin.ee/s6dzYlk" target="_blank" class="btn-manseki">満席／キャンセル待ちはこちら</a>';
+    } else {
+      html += '<a href="' + APPLY_URL + '" target="_blank" class="btn-apply">申し込む →</a>';
+    }
     html += '</div></div></div>';
   }
   el.innerHTML = html;
