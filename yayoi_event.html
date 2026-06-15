@@ -52,6 +52,9 @@ section.visible{display:block;}
 .btn-apply:hover{background:var(--bordeaux);}
 .btn-manseki{display:inline-flex;align-items:center;padding:8px 12px;background:var(--sub);color:var(--greige);font-size:0.6rem;letter-spacing:0.1em;text-decoration:none;border:1px solid var(--border);white-space:nowrap;transition:all 0.2s;}
 .btn-manseki:hover{border-color:var(--gold);color:var(--gold);}
+.btn-toiawase{display:inline-flex;align-items:center;padding:8px 12px;background:var(--charcoal);color:var(--white);font-size:0.6rem;letter-spacing:0.1em;text-decoration:none;white-space:nowrap;transition:all 0.2s;}
+.btn-toiawase:hover{background:var(--bordeaux);}
+.date-tbd{font-family:'Noto Serif JP',serif;font-size:0.65rem;color:var(--gold);text-align:center;line-height:1.6;}
 .trust-grid{background:var(--sub);margin:24px -20px -40px;padding:24px 20px;display:grid;grid-template-columns:1fr 1fr 1fr;gap:16px;}
 .trust-item{text-align:center;}
 .trust-title{font-family:'Noto Serif JP',serif;font-size:0.72rem;color:var(--charcoal);margin-bottom:4px;}
@@ -304,7 +307,7 @@ function loadEvents() {
 }
 
 function renderEvents() {
-  var active = allEvents.filter(function(r) { return r['状態'] === '募集中' || r['状態'] === '満席'; });
+  var active = allEvents.filter(function(r) { return r['状態'] === '募集中' || r['状態'] === '満席' || r['状態'] === '問い合わせ'; });
   active = sortByDate(active);
   var el = document.getElementById('events-list');
   var countEl = document.getElementById('event-count');
@@ -327,15 +330,21 @@ function renderEvents() {
     var name = ev['イベント名'] || '';
     html += '<div class="event-card">';
     html += '<div class="date-block">';
-    html += '<span class="date-md">' + mdStr + '</span>';
-    html += '<span class="date-day">' + dayStr + '</span>';
-    html += '<span class="date-dow">' + dow + '</span>';
-    if (timeStr) html += '<span class="date-time">' + timeStr + '</span>';
-    if (area) html += '<span class="date-area">' + area + '</span>';
+    if (md) {
+      html += '<span class="date-md">' + mdStr + '</span>';
+      html += '<span class="date-day">' + dayStr + '</span>';
+      html += '<span class="date-dow">' + dow + '</span>';
+      if (timeStr) html += '<span class="date-time">' + timeStr + '</span>';
+      if (area) html += '<span class="date-area">' + area + '</span>';
+    } else {
+      var tbdText = (ev['開催日時'] || '日程調整中').trim();
+      html += '<span class="date-tbd">' + tbdText + '</span>';
+      if (area) html += '<span class="date-area">' + area + '</span>';
+    }
     html += '</div>';
     html += '<div class="event-body">';
     if (genre) html += '<span class="genre-tag">' + genre + '</span>';
-    html += '<p class="event-name">' + name + '</p>';
+    html += '<p class="event-name">' + name.replace(/\n/g, '<br>') + '</p>';
     html += '<div class="event-bottom">';
     html += '<div class="event-fee-loc">';
     html += '<span class="event-fee">' + fee + '</span>';
@@ -343,6 +352,8 @@ function renderEvents() {
     html += '</div>';
     if (ev['状態'] === '満席') {
       html += '<a href="https://lin.ee/s6dzYlk" target="_blank" class="btn-manseki">満席／キャンセル待ちはこちら</a>';
+    } else if (ev['状態'] === '問い合わせ') {
+      html += '<a href="https://lin.ee/s6dzYlk" target="_blank" class="btn-toiawase">日程・詳細はLINEへ →</a>';
     } else {
       html += '<a href="' + APPLY_URL + '" target="_blank" class="btn-apply">申し込む →</a>';
     }
