@@ -270,10 +270,18 @@ function formatFee(val) {
   return n.toLocaleString() + '円';
 }
 
+function getMonthHint(str) {
+  if (!str) return null;
+  // 「7月」「7/」などから月だけ取得
+  var m = str.match(/(\d+)[月\/]/);
+  if (m) return { month: parseInt(m[1]), day: 99 };
+  return null;
+}
+
 function sortByDate(arr) {
   return arr.slice().sort(function(a, b) {
-    var da = getMonthDay(a['開催日時']);
-    var db = getMonthDay(b['開催日時']);
+    var da = getMonthDay(a['開催日時']) || getMonthHint(a['開催日時']);
+    var db = getMonthDay(b['開催日時']) || getMonthHint(b['開催日時']);
     if (!da && !db) return 0;
     if (!da) return 1;
     if (!db) return -1;
@@ -344,7 +352,7 @@ function renderEvents() {
     html += '</div>';
     html += '<div class="event-body">';
     if (genre) html += '<span class="genre-tag">' + genre + '</span>';
-    html += '<p class="event-name">' + name.replace(/\n/g, '<br>') + '</p>';
+    html += '<p class="event-name">' + name.replace(/\\n/g, '<br>').replace(/\n/g, '<br>') + '</p>';
     html += '<div class="event-bottom">';
     html += '<div class="event-fee-loc">';
     html += '<span class="event-fee">' + fee + '</span>';
@@ -353,7 +361,7 @@ function renderEvents() {
     if (ev['状態'] === '満席') {
       html += '<a href="https://lin.ee/s6dzYlk" target="_blank" class="btn-manseki">満席／キャンセル待ちはこちら</a>';
     } else if (ev['状態'] === '問い合わせ') {
-      html += '<a href="https://lin.ee/s6dzYlk" target="_blank" class="btn-toiawase">日程・詳細はLINEへ →</a>';
+      html += '<a href="https://lin.ee/s6dzYlk" target="_blank" class="btn-toiawase">お問合せ →</a>';
     } else {
       html += '<a href="' + APPLY_URL + '" target="_blank" class="btn-apply">申し込む →</a>';
     }
